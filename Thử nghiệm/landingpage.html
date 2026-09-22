@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wedding Landing Page</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+      :root {
+        --bg-1: #f7f2ee;
+        --bg-2: #e9d9d0;
+        --panel: rgba(255, 255, 255, 0.12);
+        --panel-border: rgba(244, 228, 214, 0.4);
+        --text: #fffaf7;
+        --soft: #f9d9ca;
+        --gold: #d7b57a;
+        --gold-soft: #f2e2bd;
+        --shadow: 0 30px 90px rgba(38, 23, 17, 0.34);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+        font-family: 'Inter', sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background:
+          linear-gradient(rgba(33, 23, 17, 0.58), rgba(33, 23, 17, 0.52)),
+          url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        color: var(--text);
+      }
+
+      .loading-screen,
+      .language-stage {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        transition: opacity 0.7s ease, visibility 0.7s ease, transform 0.7s ease;
+      }
+
+      .loading-screen {
+        z-index: 10;
+        background: rgba(18, 12, 11, 0.42);
+        backdrop-filter: blur(4px);
+      }
+
+      .loading-screen.fade-out {
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(1.05);
+      }
+
+      .loader-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+      }
+
+      .spinner {
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-top-color: var(--gold);
+        border-right-color: rgba(255, 255, 255, 0.7);
+        animation: spin 1s linear infinite;
+        box-shadow: 0 0 18px rgba(215, 181, 122, 0.3);
+      }
+
+      .loader-box p {
+        margin: 0;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .language-stage {
+        z-index: 9;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .language-stage.show {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        animation: fadeInUp 0.8s ease forwards;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .language-card {
+        width: min(620px, 100%);
+        background: linear-gradient(180deg, rgba(255,255,255,0.13), rgba(255,255,255,0.08));
+        border: 1px solid var(--panel-border);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        padding: 38px 28px 28px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .tag {
+        display: inline-block;
+        margin-bottom: 18px;
+        padding: 8px 18px;
+        border: 1px solid rgba(242, 226, 189, 0.38);
+        border-radius: 999px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        color: var(--gold-soft);
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(3rem, 6vw, 5.8rem);
+        line-height: 0.9;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        color: #fffaf7;
+      }
+
+      .couple-names {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        flex-wrap: wrap;
+        color: rgba(255, 250, 247, 0.9);
+        font-size: 0.9rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .couple-name {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+      }
+
+      .language-options {
+        margin-top: 28px;
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .lang-btn {
+        flex: 1 1 190px;
+        min-height: 72px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        cursor: pointer;
+        transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .lang-btn:hover {
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.7);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 520px) {
+        .language-card {
+          padding: 30px 20px 24px;
+        }
+
+        .language-options {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Loading</p>
+      </div>
+    </div>
+
+    <div class="language-stage" id="languageStage">
+      <div class="language-card">
+        <div class="tag">Welcome</div>
+        <h1>Hồng &amp; Phụng</h1>
+        <div class="couple-names" aria-label="Couple names">
+          <span class="couple-name">(Johnluu)</span>
+          <span class="couple-name">(Doll Jelly)</span>
+        </div>
+        <div class="language-options">
+          <button class="lang-btn" type="button" data-lang="en">English</button>
+          <button class="lang-btn" type="button" data-lang="vi">Tiếng Việt</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const loadingScreen = document.getElementById('loadingScreen');
+      const languageStage = document.getElementById('languageStage');
+      const body = document.body;
+
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        setTimeout(() => {
+          languageStage.classList.add('show');
+        }, 400);
+      }, 1600);
+
+      document.querySelectorAll('.lang-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          const lang = button.dataset.lang;
+          body.style.opacity = '0';
+          body.style.transition = 'opacity 0.5s ease';
+
+          setTimeout(() => {
+            if (lang === 'vi') {
+              window.location.href = 'index.html';
+              return;
+            }
+            window.location.href = 'index-english.html';
+          }, 500);
+        });
+      });
+    </script>
+  </body>
+</html>
